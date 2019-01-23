@@ -1,0 +1,30 @@
+package ques1;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mrunit.MapDriver;
+import org.apache.hadoop.mrunit.mapreduce.MapReduceDriver;
+import org.apache.hadoop.mrunit.mapreduce.ReduceDriver;
+import org.junit.Before;
+import org.junit.Test;
+import ques1.femaleGraduatesMapper;
+
+public class q1test {
+	
+	MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
+	
+	@Before
+	public void setUp() {
+		femaleGraduatesMapper mapper = new femaleGraduatesMapper();
+		mapDriver = new MapDriver<LongWritable, Text, Text, DoubleWritable>();
+		mapDriver.setMapper(mapper);
+	}
+	 
+	 @Test
+	 public void testMapper() {
+		 mapDriver.withInput(new LongWritable(), new Text("\"Nepal\",\"NPL\",\"Gross graduation ratio, tertiary, female (%)\",\"SE.TER.CMPL.FE.ZS\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"\",\"9.09035\",\"\",\"\",\"\","));
+		 mapDriver.withOutput(new Text("Nepal"), new DoubleWritable(9.09));
+		 mapDriver.runTest();
+	 }
+}

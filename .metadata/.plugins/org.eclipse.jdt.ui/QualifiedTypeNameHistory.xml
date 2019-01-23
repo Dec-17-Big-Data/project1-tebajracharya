@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="femaleGraduates.femaleGraduates"/>
+<fullyQualifiedTypeName name="femaleGraduates.femaleGraduatesMapper"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.io.Text"/>
+<fullyQualifiedTypeName name="org.junit.Before"/>
+<fullyQualifiedTypeName name="org.junit.Test"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.io.DoubleWritable"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.io.LongWritable"/>
+<fullyQualifiedTypeName name="ques1.femaleGraduates"/>
+<fullyQualifiedTypeName name="ques1.femaleGraduatesMapper"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.mrunit.ReduceDriver"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.mrunit.MapDriver"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.mapred.Mapper"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.mapreduce.Mapper"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.mrunit.MapReduceDriver"/>
+<fullyQualifiedTypeName name="org.apache.hadoop.io.IntWritable"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+</qualifiedTypeNameHistroy>

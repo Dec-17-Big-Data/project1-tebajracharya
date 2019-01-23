@@ -1,0 +1,20 @@
+package femaleGraduates;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class femaleGraduatesMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+	@Override
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+		BufferedReader in = new BufferedReader(new FileReader("Gender_StatsData.csv"));
+		if(in.toString().contains("gross graduation ratio, primary, female (%)")){
+		      // Skip header line (first line) of CSV
+		       return;
+		  }
+   }
+}

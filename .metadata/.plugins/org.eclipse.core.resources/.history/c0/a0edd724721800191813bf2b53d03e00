@@ -1,0 +1,5 @@
+package femaleGraduates;
+
+public class femaleGraduatesReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+
+}

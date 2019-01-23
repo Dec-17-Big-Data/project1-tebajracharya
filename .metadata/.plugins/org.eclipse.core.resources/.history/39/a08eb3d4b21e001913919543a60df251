@@ -1,0 +1,46 @@
+package ques2;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+/**
+* Input is a comma-separated string, interpreted as Key:Value. 
+* Output is Key:Value, and the value contains the Country as key and percentage of graduates as the value.
+*/
+
+public class FemaleEducationMapper extends Mapper<LongWritable, Text, Text, Text>{
+	/**
+	 * The map function gets a key which is a byte offset and value is a single line from the csv file.
+	 * It uses a regex to filter out the search criteria and removes punctuation and stored in list of string by words.
+	 * Search criteria in the mapper phase is looking for "School enrollment, tertiary, female (% gross)" or 
+	 * "Gross graduation ratio, tertiary, female (%)". The matching search line is then cleaned in the mapper.
+	 * Each word is parsed from the rear to get the most recent percentage and the output is written back to the HDFS along
+	 * with the key as the name of the country.
+	 */
+	@Override
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+		if ((value.toString().contains("SE.TER.CMPL.FE.ZS") && value.toString().contains("United States")) || value.toString().contains("SE.TER.ENRR.FE") && value.toString().contains("United States"))
+			{		
+			String line[] = value.toString().split("\",\"?");
+			Double percentageChange = 0.0;
+			Double currentYear = 0.0;
+			Double nextYear = 0.0;
+			for(int i = 44;i < line.length - 1; i++) {
+				try{
+					currentYear = Double.parseDouble(line[i]);
+					nextYear = Double.parseDouble(line[i+1]);
+					percentageChange = ((nextYear - currentYear) / currentYear);
+					String out = line[2] + " " + String.valueOf(Math.round(percentageChange *1000.0)/1000.0);
+					Text output = new Text();
+					output.set(out);
+					context.write(new Text(line[0].toString().substring(1)), new Text(output));
+				}
+				catch(Exception e) {
+				}
+			}
+		}
+	}	
+}

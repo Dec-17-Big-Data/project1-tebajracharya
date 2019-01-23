@@ -1,0 +1,27 @@
+package ques1;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mrunit.MapDriver;
+import org.junit.Before;
+import org.junit.Test;
+import ques1.femaleGraduatesMapper;
+
+public class q1test {
+	MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
+	
+	@Before
+	public void setUp() {
+		ques1 mapper = new ques1();
+		mapDriver = new q1<LongWritable, Text, Text, DoubleWritable>();
+		mapDriver.setMapper(mapper);
+	}
+	 
+	 @Test
+	 public void testMapper() {
+		 mapDriver.withInput(new LongWritable(), new Text("655209;1;796764372490213;804422938115889;6"));
+		 mapDriver.withOutput(new Text("6"), new DoubleWritable(1));
+		 mapDriver.runTest();
+	 }
+}

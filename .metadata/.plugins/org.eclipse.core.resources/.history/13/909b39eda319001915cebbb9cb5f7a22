@@ -1,0 +1,25 @@
+package femaleGraduates;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class femaleGraduatesMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
+	@Override
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+		if (value.toString().contains("Gross graduation ratio, primary, female (%)")); {
+			String[] words = value.toString().replaceAll("[^a-zA-Z_0-9]","").split(",");
+				for(int i = words.length - 1; i > 0 ; i--) {
+					if(Double.parseDouble(words[i]) < 30.00){
+						context.write(new Text(words[1]), new IntWritable(1));
+						break;
+					}
+					else
+						continue;
+				}
+		}
+	}	
+}
