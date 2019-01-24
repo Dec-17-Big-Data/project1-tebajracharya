@@ -1,0 +1,21 @@
+package ques1;
+
+public class q1test {
+	MapDriver<LongWritable, Text, Text, IntWritable> mapDriver;
+	
+	@Before
+	public void setUp() {
+		SMSCDRMapper mapper = new SMSCDRMapper();
+	    SMSCDRReducer reducer = new SMSCDRReducer();
+	    mapDriver = MapDriver.newMapDriver(mapper);
+	    reduceDriver = ReduceDriver.newReduceDriver(reducer);
+	    mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);
+	}
+	 
+	 @Test
+	 public void testMapper() {
+		 mapDriver.withInput(new LongWritable(), new Text("655209;1;796764372490213;804422938115889;6"));
+		 mapDriver.withOutput(new Text("6"), new IntWritable(1));
+		 mapDriver.runTest();
+	 }
+}

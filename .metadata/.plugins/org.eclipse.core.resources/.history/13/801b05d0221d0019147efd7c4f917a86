@@ -1,0 +1,20 @@
+package ques3;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+public class MaleEmploymentReducer extends Reducer<Text, Text, Text, DoubleWritable> {
+	@Override
+    public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
+		Double percentageChange = 0.0;
+		String[] val = values.toString().split("\\s+");
+	
+		percentageChange = ((Double.parseDouble(val[1]) - Double.parseDouble(val[0])) / Double.parseDouble(val[0])) * 100 ;
+        
+        context.write(key, new DoubleWritable(percentageChange));
+    }
+
+}

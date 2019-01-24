@@ -1,0 +1,28 @@
+package ques1;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mrunit.mapreduce.MapDriver;
+import org.junit.Before;
+import org.junit.Test;
+
+import femaleGraduates.femaleGraduatesMapper;
+
+public class femaleGraduatesTest {
+	  MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
+	 
+	  @Before
+	  public void setUp() {
+	    femaleGraduatesMapper mapper = new femaleGraduatesMapper();
+	    mapDriver = new MapDriver<LongWritable, Text, Text, DoubleWritable>();
+	    mapDriver.setMapper(mapper);
+	  }
+	 
+	  @Test
+	  public void testMapper() {
+	    mapDriver.withInput(new LongWritable(1), new Text("\"Cambodia\",\"KHM\",\"Gross graduation ratio, primary, female(%)\",\"SE.PRM.CMPL.FE.ZS\",\"\",\"\",\"78.03771\",\"80.96638\",\"77.94762\",\"\",\"83.78397\",\"83.76439\",\"20.11444\""));
+	    mapDriver.withOutput(new Text("Cambodia"), new DoubleWritable(20.11444));
+	    mapDriver.runTest();
+	  }
+}

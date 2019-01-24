@@ -1,0 +1,31 @@
+package ques5;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mrunit.MapDriver;
+import org.junit.Before;
+import org.junit.Test;
+
+import ques1.femaleGraduatesMapper;
+import ques1.q1test;
+
+public class q5test {
+	
+	private MapDriver<LongWritable, Text, Text, DoubleWritable> mapDriver;
+	
+	@Before
+	public void setUp() {
+		Mapper mapper = new maternityBenefitMapper();
+		mapDriver = new MapDriver<LongWritable, Text, Text, DoubleWritable>();
+		mapDriver.setMapper((org.apache.hadoop.mapred.Mapper<LongWritable, Text, Text, DoubleWritable>) mapper);
+	}
+	 
+	 @Test
+	 public void testMapper() {
+		 mapDriver.withInput(new LongWritable(), new Text("655209;1;796764372490213;804422938115889;6"));
+		 mapDriver.withOutput(new Text("6"), new DoubleWritable(1));
+		 mapDriver.runTest();
+	 }
+}

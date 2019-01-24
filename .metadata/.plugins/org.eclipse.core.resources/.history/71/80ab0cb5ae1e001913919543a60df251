@@ -1,0 +1,40 @@
+package femaleGraduates;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+/**
+* Input is a comma-separated string, interpreted as Key:Value. 
+* Output is Key:Value, and the value contains the Country as key and percentage of graduates as the value.
+*/
+
+public class femaleGraduatesMapper extends Mapper<LongWritable, Text, Text, Text> {
+	/**
+	 * The map function gets a key which is a byte offset and value is a single line from the csv file.
+	 * It uses a regex to filter out the search criteria and removes punctuation and stored in list of string by words.
+	 * Each word is parsed from the rear to get the most recent percentage and the output is written back to the HDFS along
+	 * with the key as the name of the country.
+	 */
+	@Override
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+		if (value.toString().contains("SE.TER.CMPL.FE.ZS")) {			
+			String line[] = value.toString().split("\",\"?");
+				for(int i = line.length - 1; i > 0 ; i--) {
+					try{
+						Double percent = Double.parseDouble(line[i]);
+						if(percent < 30){
+							Text output = new Text(line[2]+" "+line[i]);
+							context.write(new Text(line[0].toString()), new Text(output));
+							i = 0;
+						}
+					}
+					catch(Exception e) {
+						
+					}
+				}
+		}
+	}	
+}

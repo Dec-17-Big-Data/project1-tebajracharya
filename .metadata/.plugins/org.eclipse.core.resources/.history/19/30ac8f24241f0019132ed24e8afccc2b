@@ -1,0 +1,31 @@
+package ques5;
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper.Context;
+
+/**
+* Input is a comma-separated string, interpreted as Key:Value. 
+* Output is Key:Value, and the key contains the Country and value is Maternity leave (days paid) for last 5 years.
+*/
+
+public class maternityBenefitMapper {
+	@Override
+    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+		if (value.toString().contains("SH.MMR.LEVE")) {			
+			String line[] = value.toString().split("\",\"?");
+			for(int i = 44;i < line.length - 1; i++) {
+				try{
+					currentYear = Double.parseDouble(line[i]);
+					nextYear = Double.parseDouble(line[i+1]);
+					percentageChange = ((nextYear - currentYear) / currentYear);
+					context.write(new Text(line[2].toString()), new DoubleWritable(Math.round(percentageChange *1000.0)/1000.0));
+				}
+				catch(Exception e) {
+				}
+			}
+	}	
+}

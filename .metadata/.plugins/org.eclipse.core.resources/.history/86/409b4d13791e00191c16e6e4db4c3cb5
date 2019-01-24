@@ -1,0 +1,40 @@
+package femaleGraduates;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+/**
+* The female graduates program takes in a input file Gender-StatsData.csv and 
+* filters the percentage of female graduates by country and stores in back into the HDFS. 
+* The output from the HDFS can be retrieved into a standard csv local file.
+*
+* @author  Tenzing Bajracharya 
+*/
+
+public class femaleGraduates {
+	public static void main(String[] args) throws Exception {
+		if(args.length != 2) {
+			System.out.println("Invalid Directory");
+			System.exit(-1);
+		}
+		
+		Job conf = new Job();
+		conf.setJarByClass(femaleGraduates.class);
+
+		conf.setOutputKeyClass(Text.class);
+		conf.setOutputValueClass(IntWritable.class);
+
+		conf.setMapperClass(femaleGraduatesMapper.class);
+		conf.setNumReduceTasks(0);
+
+		FileInputFormat.setInputPaths(conf, new Path(args[0]));
+		FileOutputFormat.setOutputPath(conf, new Path(args[1]));
+		
+		boolean success = conf.waitForCompletion(true);
+		System.exit(success ? 0 : 1);
+	}
+}
